@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ConnectButton, useCurrentAccount, useSuiClient } from "@mysten/dapp-kit";
+import Decimal from "decimal.js";
 
 const WALLETS = [
   {
@@ -31,7 +32,7 @@ export default function WalletConnect() {
       }
       try {
         const res = await client.getBalance({ owner: account.address });
-        setBalance((Number(res.totalBalance) / 1e9).toFixed(9));
+        setBalance(new Decimal(res.totalBalance).div(1e9).toFixed(9));
       } catch (err) {
         console.error("取得餘額失敗", err);
         setBalance("Error");

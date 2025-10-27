@@ -99,7 +99,6 @@ export default function CheckAddress() {
                     <strong>Other Coin ({totalCoins}):</strong>
                   </div>
 
-                  {/* Coin list */}
                   <ul style={{ listStyle: "none", padding: 0, marginTop: 12 }}>
                     {currentCoins.map((c: CoinData) => (
                       <li
@@ -121,7 +120,6 @@ export default function CheckAddress() {
                     ))}
                   </ul>
 
-                  {/* Pagination controls */}
                   <Pagination currentPage={currentPage} totalPages={totalPages} itemsPerPage={itemsPerPage} totalItems={totalCoins} onPageChange={handlePageChange} onItemsPerPageChange={setItemsPerPage} />
                 </>
               )}
