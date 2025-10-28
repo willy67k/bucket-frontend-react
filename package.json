@@ -14,6 +14,7 @@
     "@mysten/dapp-kit": "^0.19.6",
     "@mysten/sui": "^1.43.1",
     "@tanstack/react-query": "^5.90.5",
+    "axios": "^1.13.0",
     "decimal.js": "^10.6.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

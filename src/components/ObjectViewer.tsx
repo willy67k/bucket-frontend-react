@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { api } from "../api/axios";
 
 interface Data {
   admin?: string;
@@ -8,8 +9,6 @@ interface Data {
   error?: string;
   details?: any;
 }
-
-const BACKEND_URL = "http://localhost:4000";
 
 export default function ObjectViewer() {
   // const [objectId, setObjectId] = useState("");
@@ -34,9 +33,12 @@ export default function ObjectViewer() {
   const handleFetch = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${BACKEND_URL}/api/object`);
-      const json = await res.json();
-      setData(json);
+      const { data } = await api.get(`/object`);
+      if (data.error) {
+        setData({ error: data.error, details: data.details });
+      } else {
+        setData(data);
+      }
     } catch (err) {
       console.error(err);
       setData({ error: "查詢失敗" });

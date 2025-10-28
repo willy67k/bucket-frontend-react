@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import Pagination from "./Pagination";
+import { api } from "../api/axios";
 
 interface CoinData {
   coinType: string;
@@ -14,8 +15,6 @@ interface ApiResult {
   details?: any;
 }
 
-const BACKEND_URL = "http://localhost:4000";
-
 export default function CheckAddress() {
   const [address, setAddress] = useState("");
   const [result, setResult] = useState<ApiResult | null>(null);
@@ -28,9 +27,8 @@ export default function CheckAddress() {
       if (!address) return;
 
       setLoading(true);
-      const res = await fetch(`${BACKEND_URL}/api/balance/${address}`);
-      const data = await res.json();
 
+      const { data } = await api.get(`/balance/${address}`);
       if (data.error) {
         setResult({ error: data.error, details: data.details });
       } else {
