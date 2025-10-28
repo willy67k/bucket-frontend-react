@@ -23,6 +23,16 @@ export default function WalletConnect() {
   const client = useSuiClient();
   const [balance, setBalance] = useState<string | null>(null);
   const [showInstallGuide, setShowInstallGuide] = useState(false);
+  const [installedExtensions, setInstalledExtensions] = useState({});
+
+  const walletFilterHandler = (wallet) => {
+    const { name } = wallet;
+    setInstalledExtensions((prev) => {
+      prev[name] = true;
+      return prev;
+    });
+    return true;
+  };
 
   useEffect(() => {
     async function fetchBalance() {
@@ -45,7 +55,7 @@ export default function WalletConnect() {
     <div style={{ maxWidth: 900, margin: "24px auto", padding: 20, border: "1px solid #ddd", borderRadius: 8 }}>
       <h3>UserStory 1 連結錢包</h3>
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center" }}>
-        <ConnectButton />
+        <ConnectButton walletFilter={walletFilterHandler} />
 
         {account ? (
           <div style={{ marginTop: "1rem", padding: "1rem", border: "1px solid #ccc", borderRadius: "8px", width: "900px" }}>
@@ -106,7 +116,7 @@ export default function WalletConnect() {
                         }}
                       >
                         <div style={{ fontWeight: "600" }}>{wallet.name}</div>
-                        <div style={{ fontSize: "14px", color: "#007bff" }}>前往安裝 →</div>
+                        {installedExtensions[wallet.name] ? <div style={{ fontSize: "14px", color: "#54cf69ff" }}>已安裝</div> : <div style={{ fontSize: "14px", color: "#007bff" }}>前往安裝 →</div>}
                       </a>
                     ))}
                   </div>
