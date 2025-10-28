@@ -16,7 +16,7 @@ const WALLETS = [
     link: "https://chromewebstore.google.com/detail/binance-wallet/cadiboklkpojfamcoggejbbdjcoiljjk",
   },
 ];
-const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor) && !/Edg\//.test(navigator.userAgent);
 
 export default function WalletConnect() {
   const account = useCurrentAccount();
