@@ -3,9 +3,6 @@ import { useConnectWallet, useCurrentAccount, useSignAndExecuteTransaction, useS
 import { Transaction } from "@mysten/sui/transactions";
 import Decimal from "decimal.js";
 
-const TESTNET_XYZ_TX = "https://suiscan.xyz/testnet/tx";
-const TESTNET_CHAIN = "sui:testnet";
-
 export default function TransferSui() {
   const connectAccount = useConnectWallet();
   const currentAccount = useCurrentAccount();
@@ -23,7 +20,7 @@ export default function TransferSui() {
         throw new Error("請先連接錢包！");
       }
 
-      if (currentAccount?.chains[0] !== TESTNET_CHAIN) {
+      if (currentAccount?.chains[0] !== import.meta.env.VITE_SUI_TESTNET_CHAIN) {
         throw new Error("目前只支援TESTNET，請切換環境！");
       }
 
@@ -62,7 +59,7 @@ export default function TransferSui() {
         throw new Error("請先連接錢包！");
       }
 
-      if (currentAccount?.chains[0] !== TESTNET_CHAIN) {
+      if (currentAccount?.chains[0] !== import.meta.env.VITE_SUI_TESTNET_CHAIN) {
         throw new Error("目前只支援TESTNET，請切換環境！");
       }
 
@@ -147,11 +144,11 @@ export default function TransferSui() {
 
       {txDigest && (
         <div style={{ marginTop: 16 }}>
-          ✅ 交易成功！
+          交易成功！
           <br />
           TX Digest: {txDigest}
           <br />
-          <a href={`${TESTNET_XYZ_TX}/${txDigest}`} target="_blank" rel="noopener noreferrer">
+          <a href={`${import.meta.env.VITE_SUI_TESTNET_XYZ_TX}/${txDigest}`} target="_blank" rel="noopener noreferrer">
             查看區塊鏈記錄
           </a>
         </div>

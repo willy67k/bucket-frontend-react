@@ -8,8 +8,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 const { networkConfig } = createNetworkConfig({
-  testnet: { url: "https://fullnode.testnet.sui.io:443" },
-  mainnet: { url: "https://fullnode.mainnet.sui.io:443" },
+  testnet: { url: import.meta.env.VITE_SUI_TESTNET_URL },
+  mainnet: { url: import.meta.env.VITE_SUI_MAINNET_URL },
 });
 
 createRoot(document.getElementById("root")!).render(
