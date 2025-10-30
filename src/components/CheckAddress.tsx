@@ -61,8 +61,9 @@ export default function CheckAddress() {
 
   const getCoinTypeName = useCallback((coinType: string): string => {
     const parts = coinType.split("::");
-    if (parts.length >= 3) {
-      return parts[2];
+
+    if (parts.length >= 1) {
+      return parts[parts.length - 1].replace(">", "");
     }
     return coinType;
   }, []);
