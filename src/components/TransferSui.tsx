@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { useConnectWallet, useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 import { Transaction } from "@mysten/sui/transactions";
 import Decimal from "decimal.js";
 
 export default function TransferSui() {
-  const connectAccount = useConnectWallet();
   const currentAccount = useCurrentAccount();
   const { mutate: signAndExecuteTransaction, data: resData } = useSignAndExecuteTransaction();
   const client = useSuiClient();
@@ -16,7 +15,7 @@ export default function TransferSui() {
 
   const handleDryRun = async (): Promise<Decimal | undefined> => {
     try {
-      if (!connectAccount || !currentAccount) {
+      if (!currentAccount) {
         throw new Error("請先連接錢包！");
       }
 
@@ -39,10 +38,7 @@ export default function TransferSui() {
         transactionBlock: await tx.build({ client }),
       });
       const gasUsed = dryRunResult.effects.gasUsed;
-      const totalGas = new Decimal(gasUsed.computationCost || 0)
-        .plus(gasUsed.storageCost || 0)
-        .minus(gasUsed.storageRebate || 0)
-        .plus(gasUsed.nonRefundableStorageFee || 0);
+      const totalGas = new Decimal(gasUsed.computationCost || 0).plus(gasUsed.storageCost || 0).minus(gasUsed.storageRebate || 0);
 
       return new Decimal(totalGas.toString()).div(1e9);
     } catch (err) {
@@ -55,7 +51,7 @@ export default function TransferSui() {
 
   const handleTransfer = async () => {
     try {
-      if (!connectAccount || !currentAccount) {
+      if (!currentAccount) {
         throw new Error("請先連接錢包！");
       }
 
